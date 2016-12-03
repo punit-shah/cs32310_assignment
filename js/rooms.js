@@ -28,6 +28,7 @@ function getRoom1() {
   var floor = new THREE.Mesh(floorGeometry, floorMaterial);
   room.add(floor);
 
+  // walls
   var extrudeSettings = {
     amount: 10,
     steps: 1,
@@ -70,6 +71,7 @@ function getRoom1() {
   var wall4 = new THREE.Mesh(wall4Geometry, wallMaterial);
   room.add(wall4);
 
+  // ceiling
   var ceilingGeometry = new THREE.PlaneGeometry(width, depth);
   ceilingGeometry.rotateX(Math.PI / 2);
   ceilingGeometry.translate(0, height, 0);
@@ -77,6 +79,11 @@ function getRoom1() {
   ceilingMaterial.side = THREE.FrontSide;
   var ceiling = new THREE.Mesh(ceilingGeometry, ceilingMaterial);
   room.add(ceiling);
+
+  // light
+  var roomLight = new THREE.PointLight(0xffffff, 0.75);
+  roomLight.position.set(0, height - 10, 0);
+  room.add(roomLight);
 
   return room;
 }

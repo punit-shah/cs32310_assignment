@@ -41,7 +41,7 @@ function initCamera() {
 }
 
 function initLight() {
-  light = new THREE.DirectionalLight(0xffffff, 1);
+  light = new THREE.DirectionalLight(0xffffff, 0.5);
   light.position.set(1000, 300, 500);
   light.castShadow = true;
   light.shadow.camera.far = 2000;
