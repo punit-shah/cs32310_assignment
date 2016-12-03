@@ -35,7 +35,7 @@ function getRoom1() {
     bevelEnabled: false,
   };
 
-  var wallMaterial = new THREE.MeshPhongMaterial({
+  var wallMaterial = new THREE.MeshLambertMaterial({
     color: 0xffffee,
     side: THREE.DoubleSide,
   });
@@ -75,15 +75,20 @@ function getRoom1() {
   var ceilingGeometry = new THREE.PlaneGeometry(width, depth);
   ceilingGeometry.rotateX(Math.PI / 2);
   ceilingGeometry.translate(0, height, 0);
-  var ceilingMaterial = wallMaterial.clone();
-  ceilingMaterial.side = THREE.FrontSide;
+  var ceilingMaterial = new THREE.MeshPhongMaterial({
+    color: 0xffffee,
+  });
   var ceiling = new THREE.Mesh(ceilingGeometry, ceilingMaterial);
   room.add(ceiling);
 
-  // light
-  var roomLight = new THREE.PointLight(0xffffff, 0.75);
-  roomLight.position.set(0, height - 10, 0);
-  room.add(roomLight);
+  // lights
+  var light1 = new THREE.PointLight(0xffffff, 0.5);
+  light1.position.set(-width * 0.2, height - 10, 0);
+  room.add(light1);
+
+  var light2 = light1.clone();
+  light2.position.x = width * 0.2;
+  room.add(light2);
 
   return room;
 }
