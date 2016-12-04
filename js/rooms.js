@@ -1,3 +1,5 @@
+var textureLoader = new THREE.TextureLoader();
+
 function initRooms() {
   var room1 = getRoom1();
   scene.add(room1);
@@ -8,24 +10,9 @@ function getRoom1() {
   var height = 200;
   var depth = 400;
   var room = new THREE.Object3D();
-  var textureLoader = new THREE.TextureLoader();
 
   // floor
-  var floorGeometry = new THREE.PlaneGeometry(width, depth);
-  floorGeometry.rotateX(-Math.PI / 2);
-
-  var floorTexture = textureLoader.load('img/floor.jpg');
-  floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
-  floorTexture.repeat.set(10, 5);
-  var floorBump = textureLoader.load('img/floor-bump.jpg');
-  floorBump.wrapS = floorBump.wrapT = THREE.RepeatWrapping;
-  floorBump.repeat.set(10, 5);
-  var floorMaterial = new THREE.MeshPhongMaterial({
-    map: floorTexture,
-    bumpMap: floorBump,
-  });
-
-  var floor = new THREE.Mesh(floorGeometry, floorMaterial);
+  var floor = getFloor(width, depth);
   room.add(floor);
 
   // walls
@@ -72,13 +59,7 @@ function getRoom1() {
   room.add(wall4);
 
   // ceiling
-  var ceilingGeometry = new THREE.PlaneGeometry(width, depth);
-  ceilingGeometry.rotateX(Math.PI / 2);
-  ceilingGeometry.translate(0, height, 0);
-  var ceilingMaterial = new THREE.MeshPhongMaterial({
-    color: 0xffffee,
-  });
-  var ceiling = new THREE.Mesh(ceilingGeometry, ceilingMaterial);
+  var ceiling = getCeiling(width, height, depth);
   room.add(ceiling);
 
   // lights
@@ -91,6 +72,38 @@ function getRoom1() {
   room.add(light2);
 
   return room;
+}
+
+function getFloor(width, depth) {
+  var floorGeometry = new THREE.PlaneGeometry(width, depth);
+  floorGeometry.rotateX(-Math.PI / 2);
+
+  var floorTexture = textureLoader.load('img/floor.jpg');
+  floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
+  floorTexture.repeat.set(10, 5);
+  var floorBump = textureLoader.load('img/floor-bump.jpg');
+  floorBump.wrapS = floorBump.wrapT = THREE.RepeatWrapping;
+  floorBump.repeat.set(10, 5);
+  var floorMaterial = new THREE.MeshPhongMaterial({
+    map: floorTexture,
+    bumpMap: floorBump,
+  });
+
+  var floor = new THREE.Mesh(floorGeometry, floorMaterial);
+  return floor;
+}
+
+function getCeiling(width, height, depth) {
+  var ceilingGeometry = new THREE.PlaneGeometry(width, depth);
+  ceilingGeometry.rotateX(Math.PI / 2);
+  ceilingGeometry.translate(0, height, 0);
+
+  var ceilingMaterial = new THREE.MeshPhongMaterial({
+    color: 0xffffee,
+  });
+
+  var ceiling = new THREE.Mesh(ceilingGeometry, ceilingMaterial);
+  return ceiling;
 }
 
 function getWallShape(width, height) {
