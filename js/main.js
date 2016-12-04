@@ -1,5 +1,8 @@
 var renderer, scene, camera;
 
+var controls = new Controls();
+var textureLoader = new THREE.TextureLoader();
+
 init();
 animate();
 
@@ -8,7 +11,7 @@ function init() {
   initScene();
 
   initCamera();
-  initControls();
+  controls.init(camera);
 
   initLight();
   initRooms();
@@ -47,6 +50,6 @@ function initLight() {
 
 function animate() {
   requestAnimationFrame(animate);
-  update();
+  controls.update();
   renderer.render(scene, camera);
 }

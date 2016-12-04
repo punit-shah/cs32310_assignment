@@ -1,5 +1,3 @@
-var textureLoader = new THREE.TextureLoader();
-
 function initRooms() {
   var room1 = getRoom1();
   scene.add(room1);
