@@ -10,6 +10,7 @@ var app = {
     // group variable for meshes
     var group = new THREE.Object3D();
 
+    group.add(new Skybox());
     group.add(app.getLights());
     group.add(app.getRooms());
 

@@ -1,18 +1,6 @@
 var Room = function (type) {
   this.textureLoader = new THREE.TextureLoader();
 
-  this.wallMaterial = new THREE.MeshStandardMaterial({
-    color: 0xffffee,
-    roughness: 0.8,
-    metalness: 0.2,
-    side: THREE.DoubleSide,
-  });
-  this.wallExtrudeSettings = {
-    amount: 10,
-    steps: 1,
-    bevelEnabled: false,
-  };
-
   return this.getRoom(type);
 };
 
@@ -53,6 +41,9 @@ Room.prototype = {
     var walls = this.getWalls(wallShapes, width, height, depth);
     room.add(walls);
 
+    var light = this.getLight(0, height - 10, 0);
+    room.add(light);
+
     return room;
   },
 
@@ -81,6 +72,9 @@ Room.prototype = {
 
     var walls = this.getWalls(wallShapes, width, height, depth);
     room.add(walls);
+
+    var light = this.getLight(0, height - 10, 0);
+    room.add(light);
 
     return room;
   },
@@ -154,7 +148,7 @@ Room.prototype = {
   },
 
   getLight: function (x, y, z) {
-    var light = new THREE.PointLight(0xffffff, 0.5);
+    var light = new THREE.PointLight(0xffffff, 0.2, 500);
     light.position.set(x, y, z);
     return light;
   },
@@ -162,40 +156,52 @@ Room.prototype = {
   getWalls: function (wallShapes, width, height, depth) {
     var walls = new THREE.Object3D();
 
+    var wallMaterial = new THREE.MeshStandardMaterial({
+      color: 0xffffee,
+      roughness: 0.8,
+      metalness: 0.2,
+      side: THREE.DoubleSide,
+    });
+    var wallExtrudeSettings = {
+      amount: 10,
+      steps: 1,
+      bevelEnabled: false,
+    };
+
     if (wallShapes.north) {
-      var wallNorthGeometry = new THREE.ExtrudeGeometry(wallShapes.north, this.wallExtrudeSettings);
+      var wallNorthGeometry = new THREE.ExtrudeGeometry(wallShapes.north, wallExtrudeSettings);
       wallNorthGeometry.translate(-width / 2, 0, -depth / 2);
-      var wallNorth = new THREE.Mesh(wallNorthGeometry, this.wallMaterial);
+      var wallNorth = new THREE.Mesh(wallNorthGeometry, wallMaterial);
       wallNorth.castShadow = true;
       wallNorth.receiveShadow = true;
       walls.add(wallNorth)
     }
 
     if (wallShapes.east) {
-      var wallEastGeometry = new THREE.ExtrudeGeometry(wallShapes.east, this.wallExtrudeSettings);
+      var wallEastGeometry = new THREE.ExtrudeGeometry(wallShapes.east, wallExtrudeSettings);
       var wallEastTransform = utils.translateAndRotateY(width / 2, 0, depth / 2, Math.PI / 2);
       wallEastGeometry.applyMatrix(wallEastTransform);
-      var wallEast = new THREE.Mesh(wallEastGeometry, this.wallMaterial);
+      var wallEast = new THREE.Mesh(wallEastGeometry, wallMaterial);
       wallEast.castShadow = true;
       wallEast.receiveShadow = true;
       walls.add(wallEast)
     }
 
     if (wallShapes.south) {
-      var wallSouthGeometry = new THREE.ExtrudeGeometry(wallShapes.south, this.wallExtrudeSettings);
+      var wallSouthGeometry = new THREE.ExtrudeGeometry(wallShapes.south, wallExtrudeSettings);
       var wallSouthTransform = utils.translateAndRotateY(width / 2, 0, depth / 2, Math.PI);
       wallSouthGeometry.applyMatrix(wallSouthTransform);
-      var wallSouth = new THREE.Mesh(wallSouthGeometry, this.wallMaterial);
+      var wallSouth = new THREE.Mesh(wallSouthGeometry, wallMaterial);
       wallSouth.castShadow = true;
       wallSouth.receiveShadow = true;
       walls.add(wallSouth)
     }
 
     if (wallShapes.west) {
-      var wallWestGeometry = new THREE.ExtrudeGeometry(wallShapes.west, this.wallExtrudeSettings);
+      var wallWestGeometry = new THREE.ExtrudeGeometry(wallShapes.west, wallExtrudeSettings);
       var wallWestTransform = utils.translateAndRotateY(-width / 2, 0, -depth / 2, -Math.PI / 2);
       wallWestGeometry.applyMatrix(wallWestTransform);
-      var wallWest = new THREE.Mesh(wallWestGeometry, this.wallMaterial);
+      var wallWest = new THREE.Mesh(wallWestGeometry, wallMaterial);
       wallWest.castShadow = true;
       wallWest.receiveShadow = true;
       walls.add(wallWest)
