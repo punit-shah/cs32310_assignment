@@ -1,7 +1,7 @@
 var Room = function (type) {
   this.textureLoader = new THREE.TextureLoader();
 
-  this.wallMaterial = new THREE.MeshLambertMaterial({
+  this.wallMaterial = new THREE.MeshPhongMaterial({
     color: 0xffffee,
     side: THREE.DoubleSide,
   });
@@ -51,10 +51,12 @@ Room.prototype = {
     var walls = this.getWalls(wallShapes, width, height, depth);
     room.add(walls);
 
-    var light1 = this.getLight(-width * 0.2, height - 10, 0);
-    room.add(light1);
-    var light2 = this.getLight(width * 0.2, height - 10, 0);
-    room.add(light2);
+    // var light1 = this.getLight(-width * 0.2, height - 10, 0);
+    // room.add(light1);
+    // var light2 = this.getLight(width * 0.2, height - 10, 0);
+    // room.add(light2);
+    var light = this.getLight(0, height / 2, 0);
+    room.add(light);
 
     return room;
   },
@@ -85,7 +87,7 @@ Room.prototype = {
     var walls = this.getWalls(wallShapes, width, height, depth);
     room.add(walls);
 
-    var light = this.getLight(0, height - 10, 0);
+    var light = this.getLight(0, height / 2, 0);
     room.add(light);
 
     return room;
@@ -101,6 +103,7 @@ Room.prototype = {
     var floorTexture = this.textureLoader.load('img/floor.jpg');
     floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
     floorTexture.repeat.set(8, 4);
+    floorTexture.anisotropy = 4;
     var floorBump = this.textureLoader.load('img/floor-bump.jpg');
     floorBump.wrapS = floorBump.wrapT = THREE.RepeatWrapping;
     floorBump.repeat.set(8, 4);
@@ -110,6 +113,7 @@ Room.prototype = {
     });
 
     var floor = new THREE.Mesh(floorGeometry, floorMaterial);
+    floor.receiveShadow = true;
     return floor;
   },
 
@@ -123,6 +127,7 @@ Room.prototype = {
     });
 
     var ceiling = new THREE.Mesh(ceilingGeometry, ceilingMaterial);
+    ceiling.castShadow = true;
     return ceiling;
   },
 
@@ -158,28 +163,40 @@ Room.prototype = {
     if (wallShapes.north) {
       var wallNorthGeometry = new THREE.ExtrudeGeometry(wallShapes.north, this.wallExtrudeSettings);
       wallNorthGeometry.translate(-width / 2, 0, -depth / 2);
-      walls.add(new THREE.Mesh(wallNorthGeometry, this.wallMaterial));
+      var wallNorth = new THREE.Mesh(wallNorthGeometry, this.wallMaterial);
+      wallNorth.castShadow = true;
+      wallNorth.receiveShadow = true;
+      walls.add(wallNorth)
     }
 
     if (wallShapes.east) {
       var wallEastGeometry = new THREE.ExtrudeGeometry(wallShapes.east, this.wallExtrudeSettings);
       var wallEastTransform = utils.translateAndRotateY(width / 2, 0, depth / 2, Math.PI / 2);
       wallEastGeometry.applyMatrix(wallEastTransform);
-      walls.add(new THREE.Mesh(wallEastGeometry, this.wallMaterial));
+      var wallEast = new THREE.Mesh(wallEastGeometry, this.wallMaterial);
+      wallEast.castShadow = true;
+      wallEast.receiveShadow = true;
+      walls.add(wallEast)
     }
 
     if (wallShapes.south) {
       var wallSouthGeometry = new THREE.ExtrudeGeometry(wallShapes.south, this.wallExtrudeSettings);
       var wallSouthTransform = utils.translateAndRotateY(width / 2, 0, depth / 2, Math.PI);
       wallSouthGeometry.applyMatrix(wallSouthTransform);
-      walls.add(new THREE.Mesh(wallSouthGeometry, this.wallMaterial));
+      var wallSouth = new THREE.Mesh(wallSouthGeometry, this.wallMaterial);
+      wallSouth.castShadow = true;
+      wallSouth.receiveShadow = true;
+      walls.add(wallSouth)
     }
 
     if (wallShapes.west) {
       var wallWestGeometry = new THREE.ExtrudeGeometry(wallShapes.west, this.wallExtrudeSettings);
       var wallWestTransform = utils.translateAndRotateY(-width / 2, 0, -depth / 2, -Math.PI / 2);
       wallWestGeometry.applyMatrix(wallWestTransform);
-      walls.add(new THREE.Mesh(wallWestGeometry, this.wallMaterial));
+      var wallWest = new THREE.Mesh(wallWestGeometry, this.wallMaterial);
+      wallWest.castShadow = true;
+      wallWest.receiveShadow = true;
+      walls.add(wallWest)
     }
 
     return walls;

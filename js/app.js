@@ -10,7 +10,7 @@ var app = {
     // group variable for meshes
     var group = new THREE.Object3D();
 
-    group.add(new THREE.AmbientLight(0x444444));
+    group.add(app.getLights());
     group.add(app.getRooms());
 
     // add group to scene
@@ -24,6 +24,8 @@ var app = {
     app.renderer.setPixelRatio(window.devicePixelRatio);
     app.renderer.setSize(window.innerWidth, window.innerHeight);
     app.renderer.setClearColor(0x87ceeb);
+    app.renderer.shadowMap.enabled = true;
+    app.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     document.getElementById('scene').appendChild(app.renderer.domElement);
   },
 
@@ -58,6 +60,25 @@ var app = {
     rooms.add(room2);
 
     return rooms;
+  },
+
+  getLights: function () {
+    var lights = new THREE.Object3D();
+
+    var ambientLight = new THREE.AmbientLight(0x555555);
+    lights.add(ambientLight);
+
+    var sun = new THREE.DirectionalLight(0xbbbbbb, 0.5);
+    sun.castShadow = true;
+    sun.shadow = new THREE.LightShadow(new THREE.PerspectiveCamera(90, 1, 1000, 6000));
+    sun.shadow.bias = 0.0001;
+    sun.shadow.darkness = 0.2;
+    sun.shadow.mapSize.width = 2048;
+    sun.shadow.mapSize.height = 2048;
+    sun.position.set(1600, 400, -2000);
+    lights.add(sun);
+
+    return lights;
   },
 
   animate: function () {
