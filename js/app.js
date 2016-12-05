@@ -53,6 +53,10 @@ var app = {
     var room1 = new Room(1);
     rooms.add(room1);
 
+    var room2 = new Room(2);
+    room2.position.set(100, 0, -500);
+    rooms.add(room2);
+
     return rooms;
   },
 
