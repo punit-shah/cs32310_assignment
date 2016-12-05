@@ -5,6 +5,8 @@ var app = {
     app.initCamera();
     app.initControls();
 
+    window.addEventListener('resize', app.onResize);
+
     // group variable for meshes
     var group = new THREE.Object3D();
 
@@ -58,6 +60,16 @@ var app = {
     requestAnimationFrame(app.animate);
     app.controls.update();
     app.renderer.render(app.scene, app.camera);
+  },
+
+  onResize: function () {
+    var width = window.innerWidth;
+    var height = window.innerHeight;
+
+    app.camera.aspect = width / height;
+    app.camera.updateProjectionMatrix();
+
+    app.renderer.setSize(width, height);
   },
 };
 

@@ -45,8 +45,8 @@ Controls.prototype = {
       }
     };
 
-    window.addEventListener('keydown', onKeyDown.bind(this), false);
-    window.addEventListener('keyup', onKeyUp.bind(this), false);
+    window.addEventListener('keydown', onKeyDown.bind(this));
+    window.addEventListener('keyup', onKeyUp.bind(this));
   },
 
   update: function () {
