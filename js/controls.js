@@ -1,15 +1,16 @@
-var Controls = function () {
+var Controls = function (camera) {
+  this.camera = camera;
+
   this.clock = new THREE.Clock();
   this.moveForward = false;
   this.moveBackward = false;
   this.turnLeft = false;
   this.turnRight = false;
+  this.init();
 };
 
 Controls.prototype = {
-  init: function (camera) {
-    this.camera = camera;
-
+  init: function () {
     var onKeyDown = function (e) {
       switch (e.keyCode) {
         case 38: // up arrow
