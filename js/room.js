@@ -1,8 +1,10 @@
 var Room = function (type) {
   this.textureLoader = new THREE.TextureLoader();
 
-  this.wallMaterial = new THREE.MeshPhongMaterial({
+  this.wallMaterial = new THREE.MeshStandardMaterial({
     color: 0xffffee,
+    roughness: 0.8,
+    metalness: 0.2,
     side: THREE.DoubleSide,
   });
   this.wallExtrudeSettings = {
@@ -51,13 +53,6 @@ Room.prototype = {
     var walls = this.getWalls(wallShapes, width, height, depth);
     room.add(walls);
 
-    // var light1 = this.getLight(-width * 0.2, height - 10, 0);
-    // room.add(light1);
-    // var light2 = this.getLight(width * 0.2, height - 10, 0);
-    // room.add(light2);
-    var light = this.getLight(0, height / 2, 0);
-    room.add(light);
-
     return room;
   },
 
@@ -87,9 +82,6 @@ Room.prototype = {
     var walls = this.getWalls(wallShapes, width, height, depth);
     room.add(walls);
 
-    var light = this.getLight(0, height / 2, 0);
-    room.add(light);
-
     return room;
   },
 
@@ -100,16 +92,24 @@ Room.prototype = {
     var floorTransform = new THREE.Matrix4().multiplyMatrices(floorTranslation, floorRotation);
     floorGeometry.applyMatrix(floorTransform);
 
-    var floorTexture = this.textureLoader.load('img/floor.jpg');
-    floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
-    floorTexture.repeat.set(8, 4);
-    floorTexture.anisotropy = 4;
-    var floorBump = this.textureLoader.load('img/floor-bump.jpg');
-    floorBump.wrapS = floorBump.wrapT = THREE.RepeatWrapping;
-    floorBump.repeat.set(8, 4);
-    var floorMaterial = new THREE.MeshPhongMaterial({
+    var textureCallback = function (map) {
+      map.wrapS = THREE.RepeatWrapping;
+      map.wrapT = THREE.RepeatWrapping;
+      map.repeat.set(2, 6);
+      map.anisotropy = 4;
+    }
+
+    var floorTexture = this.textureLoader.load('img/hardwood2_diffuse.jpg', textureCallback);
+    var floorBump = this.textureLoader.load('img/hardwood2_bump.jpg', textureCallback);
+    var floorRoughness = this.textureLoader.load('img/hardwood2_roughness.jpg', textureCallback);
+    var floorMaterial = new THREE.MeshStandardMaterial({
+      color: 0xffffff,
       map: floorTexture,
       bumpMap: floorBump,
+      roughnessMap: floorRoughness,
+      bumpScale: 0.1,
+      roughness: 0.8,
+      metalness: 0.2,
     });
 
     var floor = new THREE.Mesh(floorGeometry, floorMaterial);
@@ -122,8 +122,10 @@ Room.prototype = {
     ceilingGeometry.rotateX(Math.PI / 2);
     ceilingGeometry.translate(0, height, 0);
 
-    var ceilingMaterial = new THREE.MeshPhongMaterial({
+    var ceilingMaterial = new THREE.MeshStandardMaterial({
       color: 0xffffee,
+      roughness: 0.8,
+      metalness: 0.2,
     });
 
     var ceiling = new THREE.Mesh(ceilingGeometry, ceilingMaterial);
@@ -152,7 +154,7 @@ Room.prototype = {
   },
 
   getLight: function (x, y, z) {
-    var light = new THREE.PointLight(0xffffff, 0.3);
+    var light = new THREE.PointLight(0xffffff, 0.5);
     light.position.set(x, y, z);
     return light;
   },
