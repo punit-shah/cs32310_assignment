@@ -44,6 +44,10 @@ Room.prototype = {
     var light = this.getLight(0, height - 4, 0);
     room.add(light);
 
+    var table = new Table(150, 65, 75);
+    table.applyMatrix(utils.translateAndRotateY(-width * 0.25 + 75 / 2, 0, 0, -Math.PI / 2));
+    room.add(table);
+
     return room;
   },
 
@@ -95,7 +99,6 @@ Room.prototype = {
     var floorBump = this.textureLoader.load('img/hardwood2_bump.jpg', textureCallback);
     var floorRoughness = this.textureLoader.load('img/hardwood2_roughness.jpg', textureCallback);
     var floorMaterial = new THREE.MeshStandardMaterial({
-      color: 0xffffff,
       map: floorTexture,
       bumpMap: floorBump,
       roughnessMap: floorRoughness,
