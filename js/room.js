@@ -148,8 +148,17 @@ Room.prototype = {
   },
 
   getLight: function (x, y, z) {
-    var light = new THREE.PointLight(0xffffff, 0.2, 500);
+    var light = new THREE.PointLight(0xeeeeee, 1, 400, 2);
+    var bulbGeometry = new THREE.SphereGeometry(4, 16, 16);
+    var bulbMaterial = new THREE.MeshStandardMaterial({
+      color: 0x000000,
+      emissive: 0xeeeeee,
+      emissiveIntensity: 1,
+    });
+    var bulb = new THREE.Mesh(bulbGeometry, bulbMaterial);
+    light.add(bulb);
     light.position.set(x, y, z);
+    light.castShadow = true;
     return light;
   },
 
