@@ -81,10 +81,8 @@ Room.prototype = {
 
   getFloor: function (width, depth) {
     var floorGeometry = new THREE.PlaneGeometry(width, depth);
-    var floorTranslation = new THREE.Matrix4().makeTranslation(0, 1, 0);
     var floorRotation = new THREE.Matrix4().makeRotationX(-Math.PI / 2);
-    var floorTransform = new THREE.Matrix4().multiplyMatrices(floorTranslation, floorRotation);
-    floorGeometry.applyMatrix(floorTransform);
+    floorGeometry.applyMatrix(floorRotation);
 
     var textureCallback = function (map) {
       map.wrapS = THREE.RepeatWrapping;
