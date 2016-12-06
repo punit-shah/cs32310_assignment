@@ -10,7 +10,7 @@ Skybox.prototype = {
 
   getGeometry: function () {
     var cubeSize = 10000;
-    var geometry = new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize);
+    var geometry = new THREE.BoxBufferGeometry(cubeSize, cubeSize, cubeSize);
     return geometry;
   },
 

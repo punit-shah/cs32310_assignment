@@ -45,8 +45,12 @@ Room.prototype = {
     room.add(light);
 
     var table = new Table(150, 65, 75);
-    table.applyMatrix(utils.translateAndRotateY(-width * 0.25 + 75 / 2, 0, 0, -Math.PI / 2));
+    table.applyMatrix(utils.translateAndRotateY(-width * 0.25 + 38, 0, 0, -Math.PI / 2));
     room.add(table);
+
+    var chair = new Chair(50, 120, 50, 7);
+    chair.applyMatrix(utils.translateAndRotateY(-width * 0.25 - 25, 0, 35, Math.PI / 2));
+    room.add(chair);
 
     return room;
   },
