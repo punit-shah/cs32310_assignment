@@ -74,8 +74,8 @@ var app = {
     sun.shadow = new THREE.LightShadow(new THREE.PerspectiveCamera(90, 1, 1000, 6000));
     sun.shadow.bias = 0.0001;
     sun.shadow.darkness = 0.2;
-    sun.shadow.mapSize.width = 2048;
-    sun.shadow.mapSize.height = 2048;
+    sun.shadow.mapSize.width = 4096;
+    sun.shadow.mapSize.height = 4096;
     sun.position.set(1600, 400, -2000);
     lights.add(sun);
 

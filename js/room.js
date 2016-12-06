@@ -41,7 +41,7 @@ Room.prototype = {
     var walls = this.getWalls(wallShapes, width, height, depth);
     room.add(walls);
 
-    var light = this.getLight(0, height - 10, 0);
+    var light = this.getLight(0, height - 4, 0);
     room.add(light);
 
     return room;
@@ -73,7 +73,7 @@ Room.prototype = {
     var walls = this.getWalls(wallShapes, width, height, depth);
     room.add(walls);
 
-    var light = this.getLight(0, height - 10, 0);
+    var light = this.getLight(0, height - 4, 0);
     room.add(light);
 
     return room;
@@ -117,7 +117,7 @@ Room.prototype = {
     ceilingGeometry.translate(0, height, 0);
 
     var ceilingMaterial = new THREE.MeshStandardMaterial({
-      color: 0xffffee,
+      color: 0xffffdd,
       roughness: 0.8,
       metalness: 0.2,
     });
@@ -148,7 +148,7 @@ Room.prototype = {
   },
 
   getLight: function (x, y, z) {
-    var light = new THREE.PointLight(0xeeeeee, 1, 400, 2);
+    var light = new THREE.PointLight(0xeeeeee, 1, 500, 2);
     var bulbGeometry = new THREE.SphereGeometry(4, 16, 16);
     var bulbMaterial = new THREE.MeshStandardMaterial({
       color: 0x000000,
@@ -166,7 +166,7 @@ Room.prototype = {
     var walls = new THREE.Object3D();
 
     var wallMaterial = new THREE.MeshStandardMaterial({
-      color: 0xffffee,
+      color: 0xffffdd,
       roughness: 0.8,
       metalness: 0.2,
       side: THREE.DoubleSide,
