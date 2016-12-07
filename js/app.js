@@ -66,7 +66,7 @@ var app = {
   getLights: function () {
     var lights = new THREE.Object3D();
 
-    var ambientLight = new THREE.AmbientLight(0x666666);
+    var ambientLight = new THREE.AmbientLight(0x777777);
     lights.add(ambientLight);
 
     var sun = new THREE.DirectionalLight(0xbbbbbb, 0.5);
