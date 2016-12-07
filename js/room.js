@@ -118,6 +118,14 @@ Room.prototype = {
     lamp1.applyMatrix(utils.translateAndRotateY(width / 2 - 35, 0, depth / 2 - 35, Math.PI * 0.75));
     room.add(lamp1);
 
+    var bed = new Bed();
+    bed.applyMatrix(utils.translateAndRotateY(-width / 2 + 100, 0, 0, Math.PI / 2));
+    room.add(bed);
+
+    var lamp2 = new Lamp();
+    lamp2.applyMatrix(utils.translateAndRotateY(-width / 2 + 35, 0, -125, -Math.PI * 0.25));
+    room.add(lamp2);
+
     return room;
   },
 
