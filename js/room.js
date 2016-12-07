@@ -48,11 +48,11 @@ Room.prototype = {
     table.applyMatrix(utils.translateAndRotateY(-width * 0.25 + 38, 0, 0, -Math.PI / 2));
     room.add(table);
 
-    var chair1 = new Chair(50, 120, 50, 7);
+    var chair1 = new Chair(50, 120, 50, 7, 0.3);
     chair1.applyMatrix(utils.translateAndRotateY(-width * 0.25 - 25, 0, -35, Math.PI / 2));
     room.add(chair1);
 
-    var chair2 = new Chair(50, 120, 50, 7);
+    var chair2 = new Chair(50, 120, 50, 7, 0.3);
     chair2.applyMatrix(utils.translateAndRotateY(-width * 0.25 + 38, 0, 75, Math.PI));
     room.add(chair2);
 
@@ -109,6 +109,14 @@ Room.prototype = {
 
     var light = this.getCeilingLight(0, height - 4, 0);
     room.add(light);
+
+    var sofa = new Chair(150, 70, 75, 20, 0.1);
+    sofa.applyMatrix(utils.translateAndRotateY(width * 0.25, 0, depth / 2 - (75 / 2 + 5), Math.PI));
+    room.add(sofa);
+
+    var lamp1 = new Lamp();
+    lamp1.applyMatrix(utils.translateAndRotateY(width / 2 - 35, 0, depth / 2 - 35, Math.PI * 0.75));
+    room.add(lamp1);
 
     return room;
   },
