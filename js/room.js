@@ -126,6 +126,10 @@ Room.prototype = {
     lamp2.applyMatrix(utils.translateAndRotateY(-width / 2 + 35, 0, -125, -Math.PI * 0.25));
     room.add(lamp2);
 
+    var tree = new TreePainting(75, 75);
+    tree.applyMatrix(utils.translateAndRotateY(-width / 2 + 2, height / 2 + 75 / 2, 0, Math.PI / 2));
+    room.add(tree);
+
     return room;
   },
 
