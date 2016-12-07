@@ -74,6 +74,10 @@ Room.prototype = {
     teapot.applyMatrix(utils.translateAndRotateY(-width * 0.25 + 38, 65 + teapotSize, -35, -Math.PI / 2));
     room.add(teapot);
 
+    var fountain = new WaterFountain();
+    fountain.translateX(width * 0.3);
+    room.add(fountain);
+
     return room;
   },
 

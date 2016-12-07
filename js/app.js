@@ -1,5 +1,8 @@
 var app = {
   init: function () {
+    app.animationUpdateFunctions = [];
+
+    app.initLoading();
     app.initRenderer();
     app.initScene();
     app.initCamera();
@@ -16,6 +19,15 @@ var app = {
 
     // add group to scene
     app.scene.add(group);
+  },
+
+  initLoading: function () {
+    THREE.DefaultLoadingManager.onProgress = function (item, loaded, total) {
+      console.log(loaded / total * 100 + '%');
+      if (loaded === total) {
+        app.animate();
+      }
+    };
   },
 
   initRenderer: function () {
@@ -84,7 +96,9 @@ var app = {
 
   animate: function () {
     requestAnimationFrame(app.animate);
-    app.controls.update();
+    app.animationUpdateFunctions.forEach(function (f) {
+      f();
+    });
     app.renderer.render(app.scene, app.camera);
   },
 
@@ -101,7 +115,7 @@ var app = {
 
 var App = function () {
   this.init();
-  this.animate();
+  // this.renderer.render(app.scene, app.camera);
 };
 
 App.prototype = app;

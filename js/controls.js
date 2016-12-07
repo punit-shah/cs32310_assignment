@@ -47,6 +47,8 @@ Controls.prototype = {
 
     window.addEventListener('keydown', onKeyDown.bind(this));
     window.addEventListener('keyup', onKeyUp.bind(this));
+
+    app.animationUpdateFunctions.push(this.update.bind(this));
   },
 
   update: function () {
