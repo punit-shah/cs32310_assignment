@@ -64,6 +64,16 @@ Room.prototype = {
     lamp2.applyMatrix(utils.translateAndRotateY(width / 2 - 35, 0, -depth / 2 + 35, -Math.PI * 0.75));
     room.add(lamp2);
 
+    var teapotSize = 8;
+    var teapotGeometry = new THREE.TeapotBufferGeometry(teapotSize, 6, false, true, true, true, true);
+    var teapotMaterial = new THREE.MeshPhongMaterial({
+      color: 0xCFAE7D,
+    });
+    var teapot = new THREE.Mesh(teapotGeometry, teapotMaterial);
+    teapot.castShadow = true;
+    teapot.applyMatrix(utils.translateAndRotateY(-width * 0.25 + 38, 65 + teapotSize, -35, -Math.PI / 2));
+    room.add(teapot);
+
     return room;
   },
 
