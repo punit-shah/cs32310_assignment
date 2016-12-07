@@ -20,10 +20,13 @@ TreePainting.prototype = {
     var texture = this.makeCanvas();
     var tree = new THREE.Mesh(
       new THREE.PlaneBufferGeometry(x, y),
-      new THREE.MeshBasicMaterial({
+      new THREE.MeshStandardMaterial({
         map: texture,
+        roughness: 1,
+        metalness: 0.3,
       })
     );
+    tree.receiveShadow = true;
     painting.add(tree);
 
     var frame = new THREE.Mesh(
