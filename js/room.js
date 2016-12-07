@@ -41,20 +41,28 @@ Room.prototype = {
     var walls = this.getWalls(wallShapes, width, height, depth);
     room.add(walls);
 
-    var light = this.getLight(0, height - 4, 0);
+    var light = this.getCeilingLight(0, height - 4, 0);
     room.add(light);
 
     var table = new Table(150, 65, 75);
     table.applyMatrix(utils.translateAndRotateY(-width * 0.25 + 38, 0, 0, -Math.PI / 2));
     room.add(table);
 
-    var chair = new Chair(50, 120, 50, 7);
-    chair.applyMatrix(utils.translateAndRotateY(-width * 0.25 - 25, 0, 35, Math.PI / 2));
-    room.add(chair);
+    var chair1 = new Chair(50, 120, 50, 7);
+    chair1.applyMatrix(utils.translateAndRotateY(-width * 0.25 - 25, 0, -35, Math.PI / 2));
+    room.add(chair1);
 
-    var lamp = new Lamp();
-    lamp.applyMatrix(utils.translateAndRotateY(-width / 2 + 35, 0, -depth / 2 + 35, -Math.PI * 0.25));
-    room.add(lamp);
+    var chair2 = new Chair(50, 120, 50, 7);
+    chair2.applyMatrix(utils.translateAndRotateY(-width * 0.25 + 38, 0, 75, Math.PI));
+    room.add(chair2);
+
+    var lamp1 = new Lamp();
+    lamp1.applyMatrix(utils.translateAndRotateY(-width / 2 + 35, 0, -depth / 2 + 35, -Math.PI * 0.25));
+    room.add(lamp1);
+
+    var lamp2 = new Lamp();
+    lamp2.applyMatrix(utils.translateAndRotateY(width / 2 - 35, 0, -depth / 2 + 35, -Math.PI * 0.75));
+    room.add(lamp2);
 
     return room;
   },
@@ -85,7 +93,7 @@ Room.prototype = {
     var walls = this.getWalls(wallShapes, width, height, depth);
     room.add(walls);
 
-    var light = this.getLight(0, height - 4, 0);
+    var light = this.getCeilingLight(0, height - 4, 0);
     room.add(light);
 
     return room;
@@ -126,7 +134,7 @@ Room.prototype = {
     ceilingGeometry.translate(0, height, 0);
 
     var ceilingMaterial = new THREE.MeshStandardMaterial({
-      color: 0xffffdd,
+      color: 0xd2691e,
       roughness: 0.8,
       metalness: 0.2,
     });
@@ -156,8 +164,8 @@ Room.prototype = {
     return path;
   },
 
-  getLight: function (x, y, z) {
-    var light = new THREE.PointLight(0xeeeeee, 1, 500, 2);
+  getCeilingLight: function (x, y, z) {
+    var light = new THREE.PointLight(0xeeeeee, 1, 400, 1);
     var bulbGeometry = new THREE.SphereGeometry(4, 16, 16);
     var bulbMaterial = new THREE.MeshStandardMaterial({
       color: 0x000000,
@@ -175,7 +183,7 @@ Room.prototype = {
     var walls = new THREE.Object3D();
 
     var wallMaterial = new THREE.MeshStandardMaterial({
-      color: 0xffffdd,
+      color: 0xd2691e,
       roughness: 0.8,
       metalness: 0.2,
       side: THREE.DoubleSide,

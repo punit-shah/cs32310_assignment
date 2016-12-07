@@ -39,7 +39,7 @@ Lamp.prototype = {
     target.applyMatrix(utils.translate(15, height - 10, 0));
     lamp.add(target);
 
-    var light = new THREE.SpotLight(0xeeeeee, 1, 500, Math.PI * 0.2, 0, 2);
+    var light = new THREE.SpotLight(0xeeeeee, 1, 400, Math.PI * 0.2, 0, 1);
     light.castShadow = true;
     light.applyMatrix(utils.translate(5, height, 0));
     light.target = target;
